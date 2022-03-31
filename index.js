@@ -19,7 +19,8 @@ app.get('/products/:id', productsController.getProductById);
 app.get('/sales', salesController.getAllSales);
 app.get('/sales/:id', salesController.getSaleById);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Escutando na porta ${PORT}`);
 });
