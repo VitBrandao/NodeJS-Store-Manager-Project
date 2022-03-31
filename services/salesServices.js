@@ -1,4 +1,5 @@
 const salesModels = require('../models/salesModels');
+const middlewares = require('../middlewares/middlewares');
 
 const verifySales = async (id) => {
   const query = await salesModels.getById(id);
@@ -11,6 +12,15 @@ const verifySales = async (id) => {
   return query;
 };
 
+const saleCreationVerification = async (productId, quantity) => { 
+  const productIdVerification = middlewares.salesProductId(productId);
+  if (productIdVerification !== 'ok') return productIdVerification;
+
+  const quantityVerification = middlewares.quantityVerify(quantity);
+  if (quantityVerification !== 'ok') return quantityVerification;
+};
+
 module.exports = {
   verifySales,
+  saleCreationVerification,
 };

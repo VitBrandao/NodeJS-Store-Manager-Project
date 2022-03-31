@@ -22,6 +22,7 @@ app.get('/sales/:id', salesController.getSaleById);
 
 // Req.3
 app.post('/products', productsController.createProduct);
+app.post('/sales', salesController.createSale);
 
 const PORT = process.env.PORT || 3000;
 

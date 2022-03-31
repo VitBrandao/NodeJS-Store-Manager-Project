@@ -25,7 +25,19 @@ const getSaleById = async (req, res) => {
   }
 };
 
+const createSale = async (req, res) => {
+  const { productId, quantity } = req.body;
+  const result = await salesServices.saleCreationVerification(productId, quantity);
+  if (result.message) {
+    if (result.message.includes('greater')) {
+      return res.status(422).json(result);
+    }
+    return res.status(400).json(result);
+  }
+};
+
 module.exports = {
   getAllSales,
   getSaleById, 
+  createSale,
 };

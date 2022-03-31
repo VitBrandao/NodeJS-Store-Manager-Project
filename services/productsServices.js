@@ -16,7 +16,7 @@ const productCreationVerify = async (name, quantity) => {
   const nameVerification = middlewares.productName(name);
   if (nameVerification !== 'ok') return nameVerification;
 
-  const quantityVerification = middlewares.productQuantity(quantity);
+  const quantityVerification = middlewares.quantityVerify(quantity);
   if (quantityVerification !== 'ok') return quantityVerification;
 };
 
