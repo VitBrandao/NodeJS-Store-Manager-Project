@@ -1,6 +1,7 @@
 const express = require('express');
 
 const app = express();
+app.use(express.json());
 
 const productsController = require('./controllers/productsControllers');
 const salesController = require('./controllers/salesControllers');
@@ -18,6 +19,9 @@ app.get('/products', productsController.getAllProducts);
 app.get('/products/:id', productsController.getProductById);
 app.get('/sales', salesController.getAllSales);
 app.get('/sales/:id', salesController.getSaleById);
+
+// Req.3
+app.post('/products', productsController.createProduct);
 
 const PORT = process.env.PORT || 3000;
 

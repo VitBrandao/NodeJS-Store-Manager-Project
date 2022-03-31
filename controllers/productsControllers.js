@@ -25,7 +25,21 @@ const getProductById = async (req, res) => {
   }
 };
 
+const createProduct = async (req, res) => {
+  const { name, quantity } = req.body;
+  const result = await productsServices.productCreationVerify(name, quantity);
+  if (result.message) {
+    if (result.message.includes('length') || result.message.includes('greater')) {
+      return res.status(422).json(result);
+    }
+    return res.status(400).json(result);
+  }
+
+  return res.status(201).json(result);
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  createProduct,
 };
