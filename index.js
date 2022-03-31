@@ -2,6 +2,9 @@ const express = require('express');
 
 const app = express();
 
+const productsController = require('./controllers/productsControllers');
+const salesController = require('./controllers/salesControllers');
+
 // não remover
 require('dotenv').config();
 
@@ -9,6 +12,12 @@ require('dotenv').config();
 app.get('/', (_request, response) => {
   response.send();
 });
+
+// Req.2
+app.get('/products', productsController.getAllProducts);
+app.get('/products/:id', productsController.getProductById);
+app.get('/sales', salesController.getAllSales);
+app.get('/sales/:id', salesController.getSaleById);
 
 const PORT = 3000;
 app.listen(PORT, () => {
