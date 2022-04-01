@@ -30,24 +30,24 @@ const getById = async (id) => {
   return serializeOne(saleById);
 };
 
-const postNewSale = async (productId, quantity) => {
-  const [allSales] = await connection.execute('SELECT * FROM sales_products');
-  const newSaleId = allSales.length + 1;
-  await connection.execute(
-    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
-    [newSaleId, productId, quantity],
-  );
+// const postNewSale = async (productId, quantity) => {
+//   const [allSales] = await connection.execute('SELECT * FROM sales_products');
+//   const newSaleId = allSales.length + 1;
+//   await connection.execute(
+//     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
+//     [newSaleId, productId, quantity],
+//   );
   
-  const [newSale] = await connection.execute(
-    'SELECT * FROM sales_products WHERE sale_id = ?',
-    [newSaleId],
-  );
+//   const [newSale] = await connection.execute(
+//     'SELECT * FROM sales_products WHERE sale_id = ?',
+//     [newSaleId],
+//   );
   
-  return newSale;
-};
+//   return newSale;
+// };
 
 module.exports = {
   getAll,
   getById,
-  postNewSale,
+  // postNewSale,
 };
