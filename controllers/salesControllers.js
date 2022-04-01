@@ -26,7 +26,7 @@ const getSaleById = async (req, res) => {
 };
 
 const createSale = async (req, res) => {
-  const { productId, quantity } = req.body;
+  const { productId, quantity } = req.body[0];
   const result = await salesServices.saleCreationVerification(productId, quantity);
   if (result.message) {
     if (result.message.includes('greater')) {

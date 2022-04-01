@@ -22,6 +22,8 @@ const quantityVerify = (quantity) => {
     const message = { message: '"quantity" is required' };
     return message; 
   }
+
+  return 'ok';
 };
 
 const salesProductId = (productId) => {
@@ -29,6 +31,8 @@ const salesProductId = (productId) => {
     const message = { message: '"productId" is required' };
     return message;
   }
+
+  return 'ok';
 };
 
 module.exports = {

@@ -12,7 +12,7 @@ const verifySales = async (id) => {
   return query;
 };
 
-const saleCreationVerification = async (productId, quantity) => { 
+const saleCreationVerification = async (productId, quantity) => {
   const productIdVerification = middlewares.salesProductId(productId);
   if (productIdVerification !== 'ok') return productIdVerification;
 
