@@ -28,8 +28,20 @@ const verifyBeforeDelete = async (id) => {
   return result;
 };
 
+const verifyBeforeUpdate = async (id, productId, quantity) => {
+  const productIdVerification = middlewares.salesProductId(productId);
+  if (productIdVerification !== 'ok') return productIdVerification;
+  
+  const quantityVerification = middlewares.quantityVerify(quantity);
+  if (quantityVerification !== 'ok') return quantityVerification;
+
+  const result = await salesModels.updateSale(id, productId, quantity);
+  return result;
+};
+
 module.exports = {
   verifySales,
   saleCreationVerification,
   verifyBeforeDelete,
+  verifyBeforeUpdate,
 };

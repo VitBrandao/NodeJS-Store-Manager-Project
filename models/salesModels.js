@@ -55,10 +55,41 @@ const deleteSale = async (id) => {
 
   await connection.execute(
     'DELETE FROM sales_products WHERE sale_id = ?',
-    [id], 
+    [id],
   );
 
   return 'deleted';
+};
+
+const mountUpdatedObject = (id, prodId, quant) => {
+  const object = {
+    saleId: id,
+    itemUpdated: [
+      {
+        productId: prodId,
+        quantity: quant,
+      },
+    ],
+  };
+  return object;
+};
+
+const updateSale = async (id, productId, quantity) => {
+  const find = await findSale(id);
+  if (find.message) return find;
+
+  await connection.execute(
+    'UPDATE sales_products SET product_id = ? WHERE sale_id = ?',
+    [productId, id],
+  );
+
+  await connection.execute(
+    'UPDATE sales_products SET quantity = ? WHERE sale_id = ?',
+    [quantity, id],
+  );
+
+  const returnedObject = mountUpdatedObject(id, productId, quantity);
+  return returnedObject;
 };
 
 // const postNewSale = async (productId, quantity) => {
@@ -68,12 +99,12 @@ const deleteSale = async (id) => {
 //     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
 //     [newSaleId, productId, quantity],
 //   );
-  
+
 //   const [newSale] = await connection.execute(
 //     'SELECT * FROM sales_products WHERE sale_id = ?',
 //     [newSaleId],
 //   );
-  
+
 //   return newSale;
 // };
 
@@ -81,5 +112,6 @@ module.exports = {
   getAll,
   getById,
   deleteSale,
+  updateSale,
   // postNewSale,
 };

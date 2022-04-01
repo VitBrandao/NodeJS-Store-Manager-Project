@@ -48,9 +48,36 @@ const deleteSale = async (req, res) => {
   return res.status(204).json();
 };
 
+const returnMessage = (result) => {
+  if (result.message.includes('length') || result.message.includes('greater')) {
+    return 422;
+  }
+  if (result.message.includes('exists')) {
+    return 409;
+  }
+  if (result.message.includes('found')) {
+    return 404;
+  }
+  return 400;
+};
+
+const updateSale = async (req, res) => {
+  const { id } = req.params;
+  const { productId, quantity } = req.body[0];
+
+  const result = await salesServices.verifyBeforeUpdate(id, productId, quantity);
+  if (result.message) {
+    const status = returnMessage(result);
+    return res.status(status).json(result);
+  }
+
+  res.status(200).json(result);
+};
+
 module.exports = {
   getAllSales,
   getSaleById, 
   createSale,
   deleteSale,
+  updateSale,
 };
