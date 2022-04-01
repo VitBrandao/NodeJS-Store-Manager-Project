@@ -30,7 +30,22 @@ const getById = async (id) => {
   return serializeOne(saleById);
 };
 
+const postNewSale = async (productId, quantity) => {
+  await connection.execute(
+    'INSERT INTO sales_products (product_id, quantity) VALUES (?, ?)',
+    [productId, quantity],
+  );
+  
+  const [newSale] = await connection.execute(
+    'SELECT * FROM sales_products WHERE product_id = ? AND quantity = ?',
+    [productId, quantity],
+  );
+  
+  return newSale;
+};
+
 module.exports = {
   getAll,
   getById,
+  postNewSale,
 };

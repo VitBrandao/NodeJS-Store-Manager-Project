@@ -18,6 +18,9 @@ const saleCreationVerification = async (productId, quantity) => {
 
   const quantityVerification = middlewares.quantityVerify(quantity);
   if (quantityVerification !== 'ok') return quantityVerification;
+
+  const create = await salesModels.postNewSale(productId, quantity);
+  return create;
 };
 
 module.exports = {

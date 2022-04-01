@@ -25,14 +25,22 @@ const getProductById = async (req, res) => {
   }
 };
 
+const returnMessage = (result) => {
+  if (result.message.includes('length') || result.message.includes('greater')) {
+    return 422;
+  }
+  if (result.message.includes('exists')) {
+    return 409;
+  }
+  return 400;
+};
+
 const createProduct = async (req, res) => {
   const { name, quantity } = req.body;
   const result = await productsServices.productCreationVerify(name, quantity);
   if (result.message) {
-    if (result.message.includes('length') || result.message.includes('greater')) {
-      return res.status(422).json(result);
-    }
-    return res.status(400).json(result);
+    const status = returnMessage(result);
+    return res.status(status).json(result);
   }
 
   return res.status(201).json(result);

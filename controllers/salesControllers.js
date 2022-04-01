@@ -34,6 +34,8 @@ const createSale = async (req, res) => {
     }
     return res.status(400).json(result);
   }
+
+  return res.status(201).json(result);
 };
 
 module.exports = {

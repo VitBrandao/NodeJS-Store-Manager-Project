@@ -35,8 +35,18 @@ const salesProductId = (productId) => {
   return 'ok';
 };
 
+const doesProductsExists = (allProducts, name) => {
+  const findProduct = allProducts.find((product) => product.name === name);
+  if (findProduct) {
+    const message = { message: 'Product already exists' };
+    return message;
+  }
+  return 'ok';
+};
+
 module.exports = {
   productName,
   quantityVerify,
   salesProductId, 
+  doesProductsExists,
 };
