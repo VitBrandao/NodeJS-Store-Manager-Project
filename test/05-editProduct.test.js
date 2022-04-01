@@ -3,7 +3,7 @@ const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
 
-jest.setTimeout(12000)
+// jest.setTimeout(12000)
 
 describe("05-editProduct", () => {
   const url = `http://localhost:${process.env.PORT}`;
