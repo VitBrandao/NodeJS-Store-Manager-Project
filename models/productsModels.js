@@ -32,7 +32,23 @@ const postNewProduct = async (name, quantity) => {
   return findNewProduct[0];
 };
 
+const findProduct = async (id) => {
+  const [find] = await connection.execute(
+    'SELECT * FROM products WHERE id = ?',
+    [id],
+  );
+
+  if (!find || find.length === 0 || find === undefined) {
+    const message = { message: 'Product not found' };
+    return message;
+  }
+  return 'ok';
+};
+
 const updateProduct = async (name, quantity, id) => {
+  const productNotFound = await findProduct(id);
+  if (productNotFound.message) return productNotFound;
+
   await connection.execute(
     'UPDATE products SET name = ? WHERE id = ?',
     [name, id],
@@ -43,11 +59,12 @@ const updateProduct = async (name, quantity, id) => {
     [quantity, id],
   );
 
-  const [findProduct] = connection.execute(
+  const [updatedProduct] = await connection.execute(
     'SELECT * FROM products WHERE id = ?',
     [id],
   );
-  return findProduct;
+  
+  return updatedProduct[0];
 };
 
 module.exports = {
