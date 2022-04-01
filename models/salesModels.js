@@ -34,7 +34,7 @@ const postNewSale = async (productId, quantity) => {
   const [allSales] = await connection.execute('SELECT * FROM sales_products');
   const newSaleId = allSales.length + 1;
   await connection.execute(
-    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?)',
+    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
     [newSaleId, productId, quantity],
   );
   
