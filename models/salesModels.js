@@ -31,14 +31,16 @@ const getById = async (id) => {
 };
 
 const postNewSale = async (productId, quantity) => {
+  const [allSales] = connection.execute('SELECT * FROM sales_products');
+  const newSaleId = allSales.length + 1;
   await connection.execute(
-    'INSERT INTO sales_products (product_id, quantity) VALUES (?, ?)',
-    [productId, quantity],
+    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?)',
+    [newSaleId, productId, quantity],
   );
   
   const [newSale] = await connection.execute(
-    'SELECT * FROM sales_products WHERE product_id = ? AND quantity = ?',
-    [productId, quantity],
+    'SELECT * FROM sales_products WHERE sale_id = ?',
+    [newSaleId],
   );
   
   return newSale;
