@@ -34,8 +34,14 @@ const productUpdateVerify = async (name, quantity, id) => {
   return update;
 };
 
+const verifyBeforeDelete = async (id) => {
+  const result = await productsModels.deleteProduct(id);
+  return result;
+};
+
 module.exports = {
   verifyProduct,
   productCreationVerify,
   productUpdateVerify,
+  verifyBeforeDelete,
 };

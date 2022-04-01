@@ -3,6 +3,8 @@ const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
 
+// jest.setTimeout(12000)
+
 describe("06-deleteProduct", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
