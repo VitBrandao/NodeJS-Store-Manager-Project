@@ -29,7 +29,7 @@ const postNewProduct = async (name, quantity) => {
     [name],
   );
 
-  return findNewProduct;
+  return findNewProduct[0];
 };
 
 const updateProduct = async (name, quantity, id) => {
