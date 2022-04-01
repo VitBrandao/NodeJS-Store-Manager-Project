@@ -30,6 +30,37 @@ const getById = async (id) => {
   return serializeOne(saleById);
 };
 
+const findSale = async (id) => {
+  const [find] = await connection.execute(
+    'SELECT * FROM sales WHERE id = ?',
+    [id],
+  );
+
+  if (!find || find.length === 0 || find === undefined) {
+    const message = { message: 'Sale not found' };
+    return message;
+  }
+  return 'ok';
+};
+
+const deleteSale = async (id) => {
+  const find = await findSale(id);
+
+  if (find.message) return find;
+
+  await connection.execute(
+    'DELETE FROM sales WHERE id = ?',
+    [id],
+  );
+
+  await connection.execute(
+    'DELETE FROM sales_products WHERE sale_id = ?',
+    [id], 
+  );
+
+  return 'deleted';
+};
+
 // const postNewSale = async (productId, quantity) => {
 //   const [allSales] = await connection.execute('SELECT * FROM sales_products');
 //   const newSaleId = allSales.length + 1;
@@ -49,5 +80,6 @@ const getById = async (id) => {
 module.exports = {
   getAll,
   getById,
+  deleteSale,
   // postNewSale,
 };

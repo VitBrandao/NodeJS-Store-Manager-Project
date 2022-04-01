@@ -23,7 +23,13 @@ const saleCreationVerification = async (productId, quantity) => {
   return 0;
 };
 
+const verifyBeforeDelete = async (id) => {
+  const result = await salesModels.deleteSale(id);
+  return result;
+};
+
 module.exports = {
   verifySales,
   saleCreationVerification,
+  verifyBeforeDelete,
 };

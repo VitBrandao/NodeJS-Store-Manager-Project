@@ -3,6 +3,8 @@ const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 
+// jest.setTimeout(12000)
+
 describe("10-deleteSales", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
