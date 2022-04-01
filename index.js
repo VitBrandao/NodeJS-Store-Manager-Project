@@ -13,7 +13,7 @@ require('dotenv').config();
 app.get('/', (_request, response) => {
   response.send();
 });
-
+app.put('/products/:id', productsController.updateProduct);
 // Req.2
 app.get('/products', productsController.getAllProducts);
 app.get('/products/:id', productsController.getProductById);
@@ -23,6 +23,8 @@ app.get('/sales/:id', salesController.getSaleById);
 // Req.3
 app.post('/products', productsController.createProduct);
 app.post('/sales', salesController.createSale);
+// app.put('/products/:id', productsController.updateProduct);
+app.put('/sales/:id', salesController.createSale);
 
 const PORT = process.env.PORT || 3000;
 

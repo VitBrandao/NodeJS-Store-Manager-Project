@@ -18,9 +18,24 @@ const productCreationVerify = async (name, quantity) => {
 
   const quantityVerification = middlewares.quantityVerify(quantity);
   if (quantityVerification !== 'ok') return quantityVerification;
+
+  const create = await productsModels.postNewProduct(name, quantity);
+  return create;
+};
+
+const productUpdateVerify = async (name, quantity, id) => {
+  const nameVerification = middlewares.productName(name);
+  if (nameVerification !== 'ok') return nameVerification;
+
+  const quantityVerification = middlewares.quantityVerify(quantity);
+  if (quantityVerification !== 'ok') return quantityVerification;
+
+  const update = await productsModels.updateProduct(name, quantity, id);
+  return update;
 };
 
 module.exports = {
   verifyProduct,
   productCreationVerify,
+  productUpdateVerify,
 };
