@@ -25,14 +25,23 @@ const getSaleById = async (req, res) => {
   }
 };
 
+const returnMessage = (result) => {
+  if (result.message.includes('length') || result.message.includes('greater')) {
+    return 422;
+  }
+  if (result.message.includes('exists')) return 409;
+
+  if (result.message.includes('found')) return 404;
+  
+  return 400;
+};
+
 const createSale = async (req, res) => {
-  const { productId, quantity } = req.body[0];
-  const result = await salesServices.saleCreationVerification(productId, quantity);
+  // const { productId, quantity } = req.body[0];
+  const result = await salesServices.saleCreationVerification(req.body);
   if (result.message) {
-    if (result.message.includes('greater')) {
-      return res.status(422).json(result);
-    }
-    return res.status(400).json(result);
+    const status = returnMessage(result);
+    return res.status(status).json(result);
   }
 
   return res.status(201).json(result);
@@ -46,19 +55,6 @@ const deleteSale = async (req, res) => {
   }
 
   return res.status(204).json();
-};
-
-const returnMessage = (result) => {
-  if (result.message.includes('length') || result.message.includes('greater')) {
-    return 422;
-  }
-  if (result.message.includes('exists')) {
-    return 409;
-  }
-  if (result.message.includes('found')) {
-    return 404;
-  }
-  return 400;
 };
 
 const updateSale = async (req, res) => {

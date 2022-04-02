@@ -29,12 +29,10 @@ const returnMessage = (result) => {
   if (result.message.includes('length') || result.message.includes('greater')) {
     return 422;
   }
-  if (result.message.includes('exists')) {
-    return 409;
-  }
-  if (result.message.includes('found')) {
-    return 404;
-  }
+  if (result.message.includes('exists')) return 409;
+
+  if (result.message.includes('found')) return 404;
+  
   return 400;
 };
 

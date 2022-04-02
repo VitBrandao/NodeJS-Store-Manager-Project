@@ -92,26 +92,59 @@ const updateSale = async (id, productId, quantity) => {
   return returnedObject;
 };
 
-// const postNewSale = async (productId, quantity) => {
-//   const [allSales] = await connection.execute('SELECT * FROM sales_products');
-//   const newSaleId = allSales.length + 1;
-//   await connection.execute(
-//     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
-//     [newSaleId, productId, quantity],
-//   );
+const insertSale = async (array, index, newSaleId) => {
+  await connection.execute(
+    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
+    [newSaleId, array[index].prodId, array[index].quant],
+  );
+  if (array.length === 2) {
+    const newIndex = 1;
+    insertSale(array, newIndex, newSaleId);
+  }
+};
 
-//   const [newSale] = await connection.execute(
-//     'SELECT * FROM sales_products WHERE sale_id = ?',
-//     [newSaleId],
-//   );
+const mountNewObject = (array, newSaleId) => {
+  const object = {
+    id: newSaleId,
+    itemsSold: [],
+  };
 
-//   return newSale;
-// };
+  for (let index = 0; index < array.length; index += 1) {
+    const { prodId, quant } = array[index];
+    const insertObject = {
+      productId: prodId,
+      quantity: quant,
+    };
+    object.itemsSold.push(insertObject);
+  }
+  return object;
+};
+
+const postNewSale = async (body) => {
+  const dataArray = [];
+  for (let index = 0; index < body.length; index += 1) {
+    const { productId, quantity } = body[index];
+    const dataObject = {
+      prodId: productId,
+      quant: quantity,
+    };
+    dataArray.push(dataObject);
+  }
+  const [allSales] = await connection.execute('SELECT * FROM sales');
+  const newSaleId = allSales.length + 1;
+  await connection.execute(
+    'INSERT INTO sales (id) VALUES (?)', [newSaleId],
+  );
+  const index = 0;
+  await insertSale(dataArray, index, newSaleId);
+  const finalObject = mountNewObject(dataArray, newSaleId);
+  return finalObject;
+};
 
 module.exports = {
   getAll,
   getById,
   deleteSale,
   updateSale,
-  // postNewSale,
+  postNewSale,
 };

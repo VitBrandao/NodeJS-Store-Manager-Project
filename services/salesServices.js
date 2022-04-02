@@ -12,15 +12,18 @@ const verifySales = async (id) => {
   return query;
 };
 
-const saleCreationVerification = async (productId, quantity) => {
-  const productIdVerification = middlewares.salesProductId(productId);
-  if (productIdVerification !== 'ok') return productIdVerification;
+const saleCreationVerification = async (body) => {
+  for (let index = 0; index < body.length; index += 1) {
+    const { productId, quantity } = body[index];
+    const productIdVerification = middlewares.salesProductId(productId);
+    if (productIdVerification !== 'ok') return productIdVerification;
+  
+    const quantityVerification = middlewares.quantityVerify(quantity);
+    if (quantityVerification !== 'ok') return quantityVerification; 
+  }
 
-  const quantityVerification = middlewares.quantityVerify(quantity);
-  if (quantityVerification !== 'ok') return quantityVerification;
-
-  // const create = await salesModels.postNewSale(productId, quantity);
-  return 0;
+  const create = await salesModels.postNewSale(body);
+  return create;
 };
 
 const verifyBeforeDelete = async (id) => {
