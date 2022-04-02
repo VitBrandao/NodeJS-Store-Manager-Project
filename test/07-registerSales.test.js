@@ -4,6 +4,7 @@ const Importer = require("mysql-import");
 require("dotenv").config();
 
 // jest.setTimeout(12000)
+// try
 
 describe("07-registerSales", () => {
   const url = `http://localhost:${process.env.PORT}`;
