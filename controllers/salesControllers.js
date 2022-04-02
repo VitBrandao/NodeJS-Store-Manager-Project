@@ -37,7 +37,6 @@ const returnMessage = (result) => {
 };
 
 const createSale = async (req, res) => {
-  // const { productId, quantity } = req.body[0];
   const result = await salesServices.saleCreationVerification(req.body);
   if (result.message) {
     const status = returnMessage(result);

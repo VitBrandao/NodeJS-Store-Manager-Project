@@ -22,8 +22,8 @@ const saleCreationVerification = async (body) => {
     if (quantityVerification !== 'ok') return quantityVerification; 
   }
 
-  const create = await salesModels.postNewSale(body);
-  return create;
+  // const create = await salesModels.postNewSale(body);
+  return 0;
 };
 
 const verifyBeforeDelete = async (id) => {
