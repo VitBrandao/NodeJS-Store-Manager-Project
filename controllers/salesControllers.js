@@ -4,10 +4,10 @@ const salesServices = require('../services/salesServices');
 const getAllSales = async (_req, res) => {
   try {
     const result = await salesModels.getAll();
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -16,12 +16,12 @@ const getSaleById = async (req, res) => {
     const { id } = req.params;
     const result = await salesServices.verifySales(id);
     if (result.message) {
-      return res.status(404).json(result);
+      return res.status(404).send(result);
     }
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -63,10 +63,10 @@ const updateSale = async (req, res) => {
   const result = await salesServices.verifyBeforeUpdate(id, productId, quantity);
   if (result.message) {
     const status = returnMessage(result);
-    return res.status(status).json(result);
+    return res.status(status).send(result);
   }
 
-  res.status(200).json(result);
+  res.status(200).send(result);
 };
 
 module.exports = {
