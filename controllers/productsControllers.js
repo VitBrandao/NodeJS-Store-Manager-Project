@@ -4,10 +4,10 @@ const productsServices = require('../services/productsServices');
 const getAllProducts = async (_req, res) => {
   try {
     const result = await productsModels.getAll();
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -16,12 +16,12 @@ const getProductById = async (req, res) => {
     const { id } = req.params;
     const result = await productsServices.verifyProduct(id);
     if (result.message) {
-      return res.status(404).json(result);
+      return res.status(404).send(result);
     }
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -44,7 +44,7 @@ const createProduct = async (req, res) => {
     return res.status(status).json(result);
   }
 
-  return res.status(201).json(result);
+  return res.status(201).send(result);
 };
 
 const updateProduct = async (req, res) => {
