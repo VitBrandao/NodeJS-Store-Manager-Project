@@ -4,6 +4,8 @@ const { exec: callbackExec } = require('child_process');
 const path = require('path');
 require('dotenv').config();
 
+jest.setTimeout(12000)
+
 const exec = util.promisify(callbackExec);
 
 const NPX_NYC_COMMAND =
