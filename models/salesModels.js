@@ -79,12 +79,12 @@ const updateSale = async (id, productId, quantity) => {
   if (find.message) return find;
 
   await connection.execute(
-    'UPDATE sales_products SET product_id = ? WHERE sale_id = ?',
+    'UPDATE StoreManager.sales_products SET product_id = ? WHERE sale_id = ?',
     [productId, id],
   );
 
   await connection.execute(
-    'UPDATE sales_products SET quantity = ? WHERE sale_id = ?',
+    'UPDATE StoreManager.sales_products SET quantity = ? WHERE sale_id = ?',
     [quantity, id],
   );
 
@@ -94,7 +94,7 @@ const updateSale = async (id, productId, quantity) => {
 
 // const insertSale = async (array, index, newSaleId) => {
 //   await connection.execute(
-//     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
+//     'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
 //     [newSaleId, array[index].prodId, array[index].quant],
 //   );
 //   if (array.length === 2) {
@@ -130,10 +130,10 @@ const updateSale = async (id, productId, quantity) => {
 //     };
 //     dataArray.push(dataObject);
 //   }
-//   const [allSales] = await connection.execute('SELECT * FROM sales');
+//   const [allSales] = await connection.execute('SELECT * FROM StoreManager.sales');
 //   const newSaleId = allSales.length + 1;
 //   await connection.execute(
-//     'INSERT INTO sales (id) VALUES (?)', [newSaleId],
+//     'INSERT INTO StoreManager.sales (id) VALUES (?)', [newSaleId],
 //   );
 //   const index = 0;
 //   await insertSale(dataArray, index, newSaleId);
